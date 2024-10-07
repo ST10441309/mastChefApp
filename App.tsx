@@ -51,22 +51,22 @@ function MyDrawer() {
   return (
     <Drawer.Navigator initialRouteName='Home'>
       <Drawer.Screen
-        name='Chef Cristoffel'
+        name='Chef Cristoffel: Home'
         component={Home}
         options={{ drawerLabel: 'Home'}}
       />
       <Drawer.Screen
-        name='Chef Cristoffel'
+        name='Chef Cristoffel: Login Screen'
         component={Login}
         options={{ drawerLabel: 'Sign in'}}
       />
       <Drawer.Screen
-        name='Chef Cristoffel'
+        name='Chef Cristoffel: Enter Items'
         component={Enter}
         options={{ drawerLabel: 'Enter menu items'}}
       />
       <Drawer.Screen
-        name='Chef Cristoffel'
+        name='Chef Cristoffel: Client Details'
         component={Clients}
         options={{ drawerLabel: 'View client details'}}
       />
@@ -87,5 +87,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  heading: {
+    textAlign: 'center',
   },
 });
