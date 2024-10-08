@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   View,
   Text,
   TextInput,
-  FlatList,
+  /* FlatList, */
   TouchableOpacity,
   Alert,
   StyleSheet,
-  SafeAreaView,
+ /* SafeAreaView, */
+ ScrollView,
 } from 'react-native';
 
 import { Picker } from '@react-native-picker/picker';
@@ -34,6 +35,8 @@ export default function App() {
   const [course, setCourse] = useState('');
   const [menuList, setMenuList] = useState<{course: string ,name: string, price: number, description: string}[]>([]);
 
+  const totalMenuItems = useMemo(() => menuList.length, [menuList]);
+
   const handleSaveDish = () => {
     if (!name || !description || !price || !course) {
       Alert.alert('Error', 'Please insert in all the spaces provided')
@@ -47,7 +50,7 @@ export default function App() {
     Alert.alert('Success', 'Items added successfully');
     }
   };
-  
+
 
    /* const handleSaveDish = () => {
 
@@ -75,12 +78,17 @@ export default function App() {
 
 
   return (
-    <View>
-        <Text> MENU ITEMS </Text>
-
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.headingContainer}>
+          <Text style={styles.headingText}> MENU ITEMS </Text>
+        </View>
         <Text>Dish List</Text>
         {menuList.map((item,index) => <Text key={index}> name -{item.name} descrip-{item.description} course-{item.course} price-{item.price}</Text>)}
 
+      <View>
+        <Text>Total: {totalMenuItems}</Text>
+      </View>
 
       <View>
         <Text>Dish</Text>
@@ -108,31 +116,40 @@ export default function App() {
         <Picker
           selectedValue={course}
           onValueChange={(itemValue) => setCourse(itemValue)}
-          style={styles.container}
+          style={styles.picker}
         >
           <Picker.Item label="Select a dish" value=""/>
           {menuArray.map((item) => (
             <Picker.Item key={item.id} label={item.course} value={item.course}/>
           ))}
         </Picker>
-
-        <TouchableOpacity onPress={handleSaveDish}>
+      <View style={styles.buttonConatiner}>
+        <TouchableOpacity onPress={handleSaveDish} style={styles.button}>
           <Text>Save</Text>
         </TouchableOpacity>
-
-
+        </View>
       </View>
     </View>
+    </ScrollView>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: 10,
     alignItems: 'center',
+    backgroundColor: '#6F4E37',
+    height: '100%', 
   },
-  heading: {
+  headingContainer: {
+    backgroundColor: '#FED8B1',
+    padding: 15,
+    marginTop: 10,
+    width: '100%',
+  },
+  headingText: {
     textAlign: 'center',
     fontSize: 26,
     fontWeight: 'bold',
@@ -145,5 +162,31 @@ const styles = StyleSheet.create({
     borderBlockColor: 'black',
     padding: 10,
     margin: 30,
+  },
+  picker: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    padding: 10,
+    marginBottom: 10,
+  },
+  buttonConatiner: {
+    padding: 10,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  button: {
+    backgroundColor: '#black',
+    padding: 10,
+    borderRadius: 10,
+    width: 250,
+  },
+  // for textInput [add view around]
+  inputContainer: {
+    padding: 10,
+  },
+  input: {
+    height: 40,
+    borderColor: '',
   },
 });
