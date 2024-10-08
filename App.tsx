@@ -86,12 +86,13 @@ export default function App() {
         <Text style={styles.subHeading}>Dish List</Text>
         {menuList.map((item,index) => 
 
-        <Text key={index}>  {item.name}  {item.description}  {item.course}  {item.price} </Text>)}
+        <Text key={index}>  {item.name}   {item.description}   {item.course}   R{item.price} </Text>)}
 
       <View>
         <Text style={styles.bodyText}>Total: {totalMenuItems}</Text>
       </View>
 
+        <Text style={styles.subHeading}>Enter Menu Items</Text>
       <View style={styles.inputContainer}>
         <Text style={styles.bodyText}>Dish</Text>
         <TextInput
