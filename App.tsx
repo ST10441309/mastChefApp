@@ -28,19 +28,19 @@ const menuArray = [
 ];
 
 export default function App() {
-  const [dish, setDish] = useState('');
+  const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
   const [course, setCourse] = useState('');
-  const [menuList, setMenuList] = useState<{course: string ,dish: string, price: number, description: string}[]>([]);
+  const [menuList, setMenuList] = useState<{course: string ,name: string, price: number, description: string}[]>([]);
 
   const handleSaveDish = () => {
-    if (!dish || !description || !price) {
+    if (!name || !description || !price || !course) {
       Alert.alert('Error', 'Please insert in all the spaces provided')
       return;
     }else{
-      setMenuList([...menuList, {course: dish, dish: course, price: price, description: description}]);
-      setDish('');
+      setMenuList([...menuList, {name: name, course: course, price: price, description: description}]);
+      setName('');
       setDescription('');
       setPrice(0);
       setCourse('');
@@ -78,29 +78,36 @@ export default function App() {
     <View>
         <Text> MENU ITEMS </Text>
 
+        <Text>Dish List</Text>
+        {menuList.map((item,index) => <Text key={index}> name -{item.name} descrip-{item.description} course-{item.course} price-{item.price}</Text>)}
+
+
       <View>
+        <Text>Dish</Text>
         <TextInput
           placeholder='Enter dish name'
-          onChangeText={(text) => setDish(text)}
-          value={dish}
-          style={styles.container} //change the container
+          onChangeText={(text) => setName(text)}
+          value={name}
+          style={styles.textInput} //change the container
         />
+        <Text>Description</Text>
         <TextInput
           placeholder='Enter the description of the dish'
           onChangeText={(text) => setDescription(text)}
           value={description}
-          style={styles.container}
+          style={styles.textInput}
         />
+        <Text>Price</Text>
         <TextInput
           placeholder='Enter the price of the dishes'
           onChangeText={(text) => setPrice(Number(text))}
           value={price.toString()}
-          style={styles.container}
+          style={styles.textInput}
         />
 
         <Picker
-          selectedValue={dish}
-          onValueChange={(itemValue) => setDish(itemValue)}
+          selectedValue={course}
+          onValueChange={(itemValue) => setCourse(itemValue)}
           style={styles.container}
         >
           <Picker.Item label="Select a dish" value=""/>
@@ -113,8 +120,6 @@ export default function App() {
           <Text>Save</Text>
         </TouchableOpacity>
 
-        <Text>Dish List</Text>
-        {menuList.map((item,index) => <Text key={index}> {item.dish} {item.description} {item.course} {item.price}</Text>)}
 
       </View>
     </View>
@@ -131,5 +136,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 26,
     fontWeight: 'bold',
+  },
+  textInput: {
+    width: 400,
+    height: 70,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    borderBlockColor: 'black',
+    padding: 10,
+    margin: 30,
   },
 });
