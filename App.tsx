@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -7,52 +7,72 @@ import {
   TouchableOpacity,
   Alert,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native';
 
 import { Picker } from '@react-native-picker/picker';
 
 const menuArray = [
-  { id: 1, dishes: 'Hors D"Oeurves' },
-  { id: 2, dishes: 'Amuse-Bouche' },
-  { id: 3, dishes: 'Soup' },
-  { id: 4, dishes: 'Salad' },
-  { id: 5, dishes: 'Appetizer' },
-  { id: 6, dishes: 'Fish' },
-  { id: 7, dishes: 'Main Entree' },
-  { id: 8, dishes: 'Palate Cleanser' },
-  { id: 9, dishes: 'Second Main Entree' },
-  { id: 10, dishes: 'Cheese' },
-  { id: 11, dishes: 'Dessert' },
-  { id: 12, dishes: 'Mignardise' },
+  { id: 1, course: 'Hors D"Oeurves' },
+  { id: 2, course: 'Amuse-Bouche' },
+  { id: 3, course: 'Soup' },
+  { id: 4, course: 'Salad' },
+  { id: 5, course: 'Appetizer' },
+  { id: 6, course: 'Fish' },
+  { id: 7, course: 'Main Entree' },
+  { id: 8, course: 'Palate Cleanser' },
+  { id: 9, course: 'Second Main Entree' },
+  { id: 10, course: 'Cheese' },
+  { id: 11, course: 'Dessert' },
+  { id: 12, course: 'Mignardise' },
 ];
 
 export default function App() {
   const [dish, setDish] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [menuList, setMenuList] = useState([]);
+  const [price, setPrice] = useState(0);
+  const [course, setCourse] = useState('');
+  const [menuList, setMenuList] = useState<{course: string ,dish: string, price: number, description: string}[]>([]);
 
-  const handleSaveBook = () => {
+  const handleSaveDish = () => {
     if (!dish || !description || !price) {
       Alert.alert('Error', 'Please insert in all the spaces provided')
       return;
-    }
-
-    const newMenu = {dish, description, price};
-    setMenuList([...menuList, newMenu]);
-    setDish('');
-    setDescription('');
-    setPrice('');
+    }else{
+      setMenuList([...menuList, {course: dish, dish: course, price: price, description: description}]);
+      setDish('');
+      setDescription('');
+      setPrice(0);
+      setCourse('');
     Alert.alert('Success', 'Items added successfully');
+    }
   };
+  
 
-  const renderMenuItem = ({item}) => (
-    <View>
-      <Text>{item.dish}</Text>
-      <Text>{item.description}</Text>
-      <Text>R.{item.price}</Text>
-    </View>
-  );
+   /* const handleSaveDish = () => {
+
+      let theDish = dish;
+      let theDescription = description;
+      let thePrice = price;
+
+      let errors = [];
+
+      if (!theDish) {
+        errors.push("The dish is required")
+      }
+
+      if (!theDescription) {
+        errors.push("The description is required")
+      }
+
+      if (isNaN(thePrice) || thePrice <= 0) {
+        errors.push("The price is required");
+      }
+      if (errors.length > 0) {
+        return;
+      }
+*/
+
 
   return (
     <View>
@@ -60,21 +80,21 @@ export default function App() {
 
       <View>
         <TextInput
-          placeholder='Enter Dishes'
-          onChangeText={setDish}
+          placeholder='Enter dish name'
+          onChangeText={(text) => setDish(text)}
           value={dish}
           style={styles.container} //change the container
         />
         <TextInput
           placeholder='Enter the description of the dish'
-          onChangeText={setDescription}
+          onChangeText={(text) => setDescription(text)}
           value={description}
           style={styles.container}
         />
         <TextInput
           placeholder='Enter the price of the dishes'
-          onChangeText={setPrice}
-          value={price}
+          onChangeText={(text) => setPrice(Number(text))}
+          value={price.toString()}
           style={styles.container}
         />
 
@@ -85,20 +105,16 @@ export default function App() {
         >
           <Picker.Item label="Select a dish" value=""/>
           {menuArray.map((item) => (
-            <Picker.Item key={item.id} label={item.dishes} value={item.dishes}/>
+            <Picker.Item key={item.id} label={item.course} value={item.course}/>
           ))}
         </Picker>
 
-        <TouchableOpacity onPress={handleSaveBook}>
+        <TouchableOpacity onPress={handleSaveDish}>
           <Text>Save</Text>
         </TouchableOpacity>
 
-        <FlatList
-          data={menuList}
-          renderItem={renderMenuItem}
-          keyExtractor={(item, index) => index.toString()}
-          style={styles.container}
-        />
+        <Text>Dish List</Text>
+        {menuList.map((item,index) => <Text key={index}> {item.dish} {item.description} {item.course} {item.price}</Text>)}
 
       </View>
     </View>
