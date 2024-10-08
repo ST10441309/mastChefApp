@@ -83,34 +83,36 @@ export default function App() {
         <View style={styles.headingContainer}>
           <Text style={styles.headingText}> MENU ITEMS </Text>
         </View>
-        <Text>Dish List</Text>
-        {menuList.map((item,index) => <Text key={index}> name -{item.name} descrip-{item.description} course-{item.course} price-{item.price}</Text>)}
+        <Text style={styles.subHeading}>Dish List</Text>
+        {menuList.map((item,index) => 
+
+        <Text key={index}>  {item.name}  {item.description}  {item.course}  {item.price} </Text>)}
 
       <View>
-        <Text>Total: {totalMenuItems}</Text>
+        <Text style={styles.bodyText}>Total: {totalMenuItems}</Text>
       </View>
 
-      <View>
-        <Text>Dish</Text>
+      <View style={styles.inputContainer}>
+        <Text style={styles.bodyText}>Dish</Text>
         <TextInput
           placeholder='Enter dish name'
           onChangeText={(text) => setName(text)}
           value={name}
-          style={styles.textInput} //change the container
+          style={styles.input} //change the container
         />
-        <Text>Description</Text>
+        <Text style={styles.bodyText}>Description</Text>
         <TextInput
           placeholder='Enter the description of the dish'
           onChangeText={(text) => setDescription(text)}
           value={description}
-          style={styles.textInput}
+          style={styles.input}
         />
-        <Text>Price</Text>
+        <Text style={styles.bodyText}>Price</Text>
         <TextInput
           placeholder='Enter the price of the dishes'
           onChangeText={(text) => setPrice(Number(text))}
           value={price.toString()}
-          style={styles.textInput}
+          style={styles.input}
         />
 
         <Picker
@@ -125,7 +127,7 @@ export default function App() {
         </Picker>
       <View style={styles.buttonConatiner}>
         <TouchableOpacity onPress={handleSaveDish} style={styles.button}>
-          <Text>Save</Text>
+          <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
         </View>
       </View>
@@ -138,55 +140,72 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
+    paddingTop: 20,
     alignItems: 'center',
-    backgroundColor: '#6F4E37',
-    height: '100%', 
+    backgroundColor: '#EFD5C3',
+    height: 1100,
   },
   headingContainer: {
-    backgroundColor: '#FED8B1',
-    padding: 15,
+    backgroundColor: '#815355',
+    borderRadius: 20,
+    padding: 25,
     marginTop: 10,
     width: '100%',
   },
   headingText: {
     textAlign: 'center',
-    fontSize: 26,
+    fontSize: 32,
     fontWeight: 'bold',
   },
-  textInput: {
-    width: 400,
-    height: 70,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    borderBlockColor: 'black',
-    padding: 10,
-    margin: 30,
-  },
-  picker: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    padding: 10,
-    marginBottom: 10,
-  },
-  buttonConatiner: {
-    padding: 10,
-    marginTop: 10,
-    alignItems: 'center',
-  },
-  button: {
-    backgroundColor: '#black',
-    padding: 10,
-    borderRadius: 10,
-    width: 250,
-  },
-  // for textInput [add view around]
-  inputContainer: {
+    inputContainer: {
     padding: 10,
   },
   input: {
-    height: 40,
-    borderColor: '',
+    height: '10%',
+    borderColor: '#000',
+    borderWidth: 2,
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 20,
   },
+  picker: {
+    height: 60,
+    borderWidth: 1,
+    padding: 10,
+    marginTop: 20,
+    marginBottom: 20,
+    backgroundColor: '#815355',
+  },
+  buttonConatiner: {
+    padding: 10,
+    borderColor: '#000',
+  },
+  button: {
+    padding: 10,
+    borderRadius: 10,
+    width: 250,
+    alignItems: 'center',
+    backgroundColor: '#815355',
+    marginTop: 50,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  arrayHeadText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  subHeading: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  bodyText: {
+    fontSize: 20,
+    margin: 5
+  },
+
 });
